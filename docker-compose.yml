@@ -4,10 +4,10 @@ services:
   ib-gateway:
     restart: always
     build:
-      context: ./latest
-      tags:
-        - "ghcr.io/gnzsnz/ib-gateway:latest"
+      context: ib-gateway-docker/latest
     image: ghcr.io/gnzsnz/ib-gateway:latest
+    networks:
+      - ib-network
     environment:
       TWS_USERID: ${TWS_USERID}
       TWS_PASSWORD: ${TWS_PASSWORD}
@@ -39,3 +39,17 @@ services:
       - "127.0.0.1:4001:4003"
       - "127.0.0.1:4002:4004"
       - "127.0.0.1:5900:5900"
+
+  app:
+    restart: always
+    build: .
+
+    networks:
+      - ib-network
+    depends_on:
+      - ib-gateway
+
+
+networks:
+  ib-network:
+    driver: bridge
