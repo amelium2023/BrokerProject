@@ -4,7 +4,7 @@ services:
   ib-gateway:
     restart: always
     build:
-      context: ib-gateway-docker/latest
+      context: latest
     image: ghcr.io/gnzsnz/ib-gateway:latest
     networks:
       - ib-network
